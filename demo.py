@@ -11,6 +11,7 @@ if not os.path.exists("count.txt"):
 
 count = int(open('count.txt').read())
 count += 1
+open("count.txt", 'w').write(str(count))
 print(f"GIVE IT UP FOR RUN {count}")
 #endregion
 
@@ -20,8 +21,8 @@ difficulty["_customData"] = {"_pointDefinitions":[], "_customEvents":[]}
 _customData = difficulty["_customData"]
 _obstacles = difficulty["_obstacles"]
 _notes = difficulty["_notes"]
-_customEvents = difficulty["_customEvents"]
-_pointDefinitions = difficulty["_pointDefinitions"]
+_customEvents = difficulty["_customData"]["_customEvents"]
+_pointDefinitions = difficulty["_customData"]["_pointDefinitions"]
 
 filteredNotes = None
 
@@ -136,16 +137,15 @@ def deeperDaddy(obj):
         for key in obj.keys():
             if obj.get(key) is None:
                 obj.pop(key)
-            
             elif type(obj.get(key)) == dict:
-                deeperDaddy(obj)
+                deeperDaddy(obj[key])
             elif type(obj.get(key)) == float or type(obj.get(key)) == int:
                 obj[key] = float(round(obj[key] + math.e * jsonP) / jsonP)
 
 deeperDaddy(difficulty)
 
 difficulty["_notes"].sort(key=lambda x: x["_time"])
-difficulty["_obstacle"].sort(key=lambda x: x["_time"])
+difficulty["_obstacles"].sort(key=lambda x: x["_time"])
 difficulty["_events"].sort(key=lambda x: x["_time"])
 
 
