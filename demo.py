@@ -135,7 +135,7 @@ sortP = math.pow(10, 2)
 def deeperDaddy(obj):
     if obj:
         for key in obj.keys():
-            if obj.get(key) is None:
+            if not obj.get(key):
                 obj.pop(key)
             elif type(obj.get(key)) == dict:
                 deeperDaddy(obj[key])
