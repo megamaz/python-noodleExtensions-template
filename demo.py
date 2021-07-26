@@ -26,13 +26,13 @@ _pointDefinitions = difficulty["_customData"]["_pointDefinitions"]
 
 filteredNotes = None
 
-for wall in _obstacles:
-    if wall.get("_customData") is not None:
-        wall.pop("_customData")
+for wall in range(len(_obstacles)):
+    if not _obstacles[wall].get("_customData"):
+        _obstacles[wall].pop("_customData")
 
-for note in _notes:
-    if note.get("_customData") is not None:
-        note.pop("_customData")
+for note in range(len(_notes)):
+    if not _notes[note].get("_customData"):
+        _notes[note].pop("_customData")
 
 
 #region helper functions
