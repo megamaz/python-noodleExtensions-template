@@ -28,11 +28,11 @@ filteredNotes = None
 
 for wall in range(len(_obstacles)):
     if not _obstacles[wall].get("_customData"):
-        _obstacles[wall].pop("_customData")
+        _obstacles[wall]["_customData"] = {}
 
 for note in range(len(_notes)):
     if not _notes[note].get("_customData"):
-        _notes[note].pop("_customData")
+        _notes[note]["_customData"] = {}
 
 
 #region helper functions
@@ -66,6 +66,9 @@ def offestOnNotesBetween(p1, p2, offset):
     filteredNotes = [x for x in _notes if x["_time"] >= p1 and x["_time"] <= p2]
 
     for filtered in range(len(filteredNotes)):
+        if not filteredNotes[filtered].get("_customData"):
+            filteredNotes[filtered]["_customData"] = {}
+        
         #always worth having.
         #man this shit BETTER not be None.
         if offset is not None:
@@ -80,6 +83,9 @@ def trackOnNotesBetween(track, p1, p2, potentialOffset=None):
     filteredNotes = [x for x in _notes if x["_time"] >= p1 and x["_time"] <= p2]
 
     for filtered in range(len(filteredNotes)):
+        if not filteredNotes[filtered].get("_customData"):
+            filteredNotes[filtered]["_customData"] = {}
+        
         filteredNotes[filtered]["_customData"]["_track"] = track
         if potentialOffset is not None:
             filteredNotes[filtered]["_customData"]["_noteJumpStartBeatOffset"] = potentialOffset
@@ -112,6 +118,9 @@ def trackOnNotesBetweenDirSep(p1, p2, potentialOffset=None, trackUp=None, trackD
     filteredNotes = [x for x in _notes if x["_time"] >= p1 and x["_time"] <= p2]
 
     for filtered in range(len(filteredNotes)):
+        if not filteredNotes[filtered].get("_customData"):
+            filteredNotes[filtered]["_customData"] = {}
+        
         if filteredNotes[filtered]["_cutDirection"] == 0 and trackUp is not None: filteredNotes[filtered]["_customData"]["_track"] = trackUp
         if filteredNotes[filtered]["_cutDirection"] == 1 and trackUp is not None: filteredNotes[filtered]["_customData"]["_track"] = trackDown
         if filteredNotes[filtered]["_cutDirection"] == 2 and trackUp is not None: filteredNotes[filtered]["_customData"]["_track"] = trackLeft
@@ -135,9 +144,13 @@ sortP = math.pow(10, 2)
 def deeperDaddy(obj):
     if obj:
         for key in obj.keys():
-            if not obj.get(key):
-                obj.pop(key)
-            elif type(obj.get(key)) == dict:
+            if not obj.get(key): # I hate you JS
+                try:
+                    _ = obj[key]
+                    obj.pop(key)
+                except KeyError:
+                    pass
+            if type(obj.get(key)) == dict:
                 deeperDaddy(obj[key])
             elif type(obj.get(key)) == float or type(obj.get(key)) == int:
                 obj[key] = float(round(obj[key] + math.e * jsonP) / jsonP)
