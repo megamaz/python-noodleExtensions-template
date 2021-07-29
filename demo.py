@@ -144,12 +144,8 @@ sortP = math.pow(10, 2)
 def deeperDaddy(obj):
     if obj:
         for key in obj.keys():
-            if not obj.get(key): # I hate you JS
-                try:
-                    _ = obj[key]
-                    obj.pop(key)
-                except KeyError:
-                    pass
+            if key in obj and obj[key] is None:
+                obj.pop(key)
             if type(obj.get(key)) == dict:
                 deeperDaddy(obj[key])
             elif type(obj.get(key)) == float or type(obj.get(key)) == int:
