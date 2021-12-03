@@ -16,9 +16,9 @@ level = json.load(open(f"./{LEVELIN}"))
 
 # clear all existing customData
 f = lambda x: level["_notes"][x].pop("_customData")
-_ = [f(x) for x in range(len(level["_notes"]))]
+_ = [f(x) for x in range(len(level["_notes"])) if level["_notes"][x].get("_customData")]
 f = lambda x: level["_obstacles"][x].pop("_customData")
-_ = [f(x) for x in range(len(level["_obstacles"]))]
+_ = [f(x) for x in range(len(level["_obstacles"])) if level["_obstacles"][x].get("_customData")]
 
 level["_customData"] = {
     "_customEvents":[],
