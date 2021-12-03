@@ -1,11 +1,13 @@
+import os
 import json
-
 
 LEVELIN = "ExpertStandard.dat"
 LEVELOUT = "ExpertPlusStandard.dat"
 
 
 # just like the JS version, this simply counts how many times you ran the program. 
+if not os.path.exists('./count.txt'):
+    open('./count.txt', 'w').write('1')
 count = int(open("./count.txt").read())
 print(f"GIVE IT UP FOR ROUND {count}")
 count += 1
