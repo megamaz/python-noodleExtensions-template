@@ -99,6 +99,11 @@ def trackOnNotesBetweenDirSep(p1:float, p2:float, dir:int, track:str, offset=Non
 
 
 #endregion
+
+#region use this area to do your stuff
+
+#endregion
+
 level["_notes"] = _notes
 level["_obstacles"] = _obstacles
 level["_customData"]["_customEvents"] = _customEvents
